@@ -12,6 +12,7 @@ pip install matplotib
 # import math and pyplot
 import math
 from matplotlib import pyplot as plt
+
 # x and y points for zero bit overhead
 overhead_0_x = []
 overhead_0_y = []
@@ -24,8 +25,22 @@ overhead_10_y = []
 overhead_20_x = []
 overhead_20_y = []
 
+# Need to call for both graphs
+
+
+def makeGraph():
+    # Use pyplot to show and clean up data
+    plt.xlabel("Packet Size In Bits")
+    plt.ylabel("End to End In Seconds")
+    plt.title("Packet Switching")
+    # Invert the x-axis, make the graph easier to read
+    plt.gca().invert_xaxis()
+    # Create a legend to under stand each line
+    plt.legend()
 
 # Method to create and plot each line with correct amount of overhead
+
+
 def packetSwitching(listx, listy, overhead):
     # This problem only uses kb which is 10^3 we easly make add mb or gb
     kb = math.pow(10, 3)
@@ -71,7 +86,22 @@ def packetSwitching(listx, listy, overhead):
         largestPacket = largestPacket / 2
 
     # After the loop give pyplot each array of x's and y's, label for the legend, and markers for each point on the line
+    # To draw two graphs I had to use the figure function
+    plt.figure(1)
+    # Plot to first figure and call makeGraph to clean up data
     plt.plot(listx, listy, label="Overhead= "+str(overhead)+"b", marker='o')
+    makeGraph()
+    # Set better limites to the line graph, makes it look better
+    plt.gca().set_ylim([4, 6.5])
+    plt.gca().set_xlim([4000, 0])
+    # Second figure in plt
+    plt.figure(2)
+    # Plot to second figure and call makeGraph to clean up data
+    plt.plot(listx, listy, label="Overhead= "+str(overhead)+"b", marker='o')
+    makeGraph()
+    # Give the second graph an x axis scaled logarithmically
+    plt.xscale('log')
+
     print("=======================")
 
 
@@ -80,16 +110,5 @@ packetSwitching(overhead_0_x, overhead_0_y, 0)
 packetSwitching(overhead_10_x, overhead_10_y, 10)
 packetSwitching(overhead_20_x, overhead_20_y, 20)
 
-# Use pyplot to show and clean up data
-plt.xlabel("Packet Size In Bits")
-plt.ylabel("End to End In Seconds")
-plt.title("Packet Switching")
-# Invert the x-axis, make the graph easier to read
-plt.gca().invert_xaxis()
-# Set better limites to the line graph, makes it look better
-plt.gca().set_ylim([4, 6.5])
-plt.gca().set_xlim([4000, 0])
-# Create a legend to under stand each line
-plt.legend()
-# Finally, tell pyplot to show the graph
+# Finally, tell pyplot to show both graphs
 plt.show()
