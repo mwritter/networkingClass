@@ -30,6 +30,7 @@ def makeGraph():
 
 def packetSwitching(overhead=0):
 
+    # Matplotlib needs two arrays to create a graph
     listx = []
     listy = []
 
